@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title></title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+
+<body>
+  <main>
+    <h1>JavaScript非同期処理おぼえがき</h1>
+    <div>
+      <h2>Promiseとawait</h2>
+      <h3>説明</h3>
+      <p>Promise内の処理は非同期で行われます。</p>
+      <p>同期させたい場合はasync関数とawaitを使います。</p>
+
+      <details>
+        <summary>Promise</summary>
+        <pre><code>let flag = true;
+const promise1 = new Promise( ( resolve, reject ) => {
+  if( flag ){
+    resolve( 'resolve(成功)です' );
+  }
+  else{
+    reject( 'reject(エラー)です' );
+  }
+})
+
+
+promise1.then( result => {  // thenはresolveが返ってきた際に実行されます。
+  console.log( result );    // > resolve(成功)です
+
+}) .catch( error => {       // catchはrejectが返ってきた際に実行されます。
+  console.error( error );   // > reject(reject(エラー))です
+
+}) .finally( () => {        // finallyは結果の可否に関わらず実行されます。
+  console.log( '処理が完了しました' );
+});
+
+// この例では成功が返ってきます。</code></pre>
+      </details>
+
+      <details>
+        <summary>async・await</summary>
+        <pre><code>async function inuGohan(){  // functionの前にasyncと書くことでawaitが使えるようになるよ
+
+  promiseGohanShitaku();        // ごはんの支度をするよ
+  inu.eat();                    // 支度中でも構わず食べようとするよ
+
+  await promiseGohanShitaku();  // 支度が終わるまで待っててね
+  inu.eat();                    // 待てと言えばちゃんと待てる子です
+}</code></pre>
+      </details>
+
+      <h3>試してみよう</h3>
+      <p>checkboxがfalseの時にreject(エラー)、trueの時にresolve(成功)を返します。</p>
+      <input type="checkbox" id="promise-a-checkbox" />
+      <button class="promise-a-buttons">promiseA</button>
+      <button class="promise-a-buttons">promiseA (await)</button>
+
+      <details>
+        <summary>コード</summary>
+        <pre class="sample-pres"></pre>
+      </details>
+    </div>
+
+    <hr />
+
+    <div>
+      <h2>複数の処理を同時に行う</h2>
+      <h3>説明</h3>
+      <p>Promiseを配列に入れることで、複数の処理を同時に行うことができます。</p>
+      <p>配列に入れたPromiseは以下のメソッドに配列を渡すことで実行できます。</p>
+      <ol>
+        <li>Promise.all()</li>
+        <li>Promise.allSettled()</li>
+        <li>Promise.any()</li>
+        <li>Promise.race()</li>
+      </ol>
+      <p>いすれも配列の先頭から実行していきますが、結果を受け取った時の挙動が異なります。</p>
+      <details>
+        <summary>それぞれの特徴</summary>
+        <ol>
+          <li>Promise.all
+            <p>全てresolveであれば結果を配列にまとめて返します。<br />
+               rejectされた場合はその時点でエラーを返し、他の結果は返しません。</p>
+          </li>
+          <li>Promise.allSettled
+            <p>すべての処理が終わった時に、各結果のオブジェクトを配列にまとめて返します。</p>
+            <pre><code>[
+  { status: 'fulfilled', value: 'resolveの値' },  // 成功
+  { status: 'rejected', reason: 'rejectの値' }  // エラー
+]</code></pre>
+          </li>
+          <li>Promise.any
+            <p>最初に返ってきたresolveの値を返します。<br />
+               全てrejectだった場合は、エラーメッセージを返します。</p>
+          </li>
+          <li>Promise.race
+            <p>最初に返ってきた結果を返します(可否は問わない)。</p>
+          </li>
+        </ol>
+      </details>
+
+      <h3>試してみよう</h3>
+      <p>3つのPromiseを実行します。<br />
+         2 → 1 → 3 の順で結果が返ってきます。</p>
+      <p>checkboxがfalseの時にreject(エラー)、trueの時にresolve(成功)を返します。</p>
+      <div>
+        <label for="b-check1">1</label>
+        <input type="checkbox" id="b-check1" class="promise-b-checkboxes" checked />
+        <label for="b-check2">2</label>
+        <input type="checkbox" id="b-check2" class="promise-b-checkboxes" checked />
+        <label for="b-check3">3</label>
+        <input type="checkbox" id="b-check3" class="promise-b-checkboxes" checked />
+      </div>
+      <button class="promise-b-buttons">Promise.all</button>
+      <button class="promise-b-buttons">Promise.allSettled</button>
+      <button class="promise-b-buttons">Promise.any</button>
+      <button class="promise-b-buttons">Promise.race</button>
+
+      <details>
+        <summary>コード</summary>
+        <pre class="sample-pres"></pre>
+      </details>
+    </div>
+
+    <hr />
+
+    <div>
+      <h2>プロミスチェーン</h2>
+      <h3>説明</h3>
+      <p>Promiseの結果を受け取るthenメソッドは繋げていくことも可能です。</p>
+      <p>then()内でreturnされた値が次のthen()へ渡されます。</p>
+
+      <h3>試してみよう</h3>
+      <p>トリ○ク2で出てきた必ず5になる計算。</p>
+      <p>1~100の範囲を超えた数値を指定した場合、エラーとなります。</p>
+      <input type="number" value="1" id="promise-c-number" />
+      <button id="promise-c-button">promiseC</button>
+
+      <details>
+        <summary>コード</summary>
+        <pre class="sample-pres"></pre>
+      </details>
+    </div>
+
+    <hr />
+
+    <div>
+      <label for="console-toggle">疑似コンソール</label>
+      <input type="checkbox" id="console-toggle" />
+      <div id="console-out-box">
+        <div id="console-controler">
+          <button type="button" id="console-clear-button">Clear</button>
+        </div>
+        <div id="console-box"></div>
+      </div>
+    </div>
+  </main>
+
+  <script src="main.js" type="module"></script>
+</body>
+
+
+</html>

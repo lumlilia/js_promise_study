@@ -1,0 +1,90 @@
+body{
+  -webkit-text-size-adjust: 100%;
+}
+
+hr{
+  margin: 24px 0;
+}
+
+details{
+  margin-top: 24px;
+}
+details:hover{
+  cursor: pointer;
+}
+
+li p:first-of-type{
+  margin-top: 0;
+}
+
+pre{
+  width: 100%;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
+
+code:not( #console-box code ){
+  font-size: 1rem;
+}
+
+input[ type = number ]{
+  width: 3rem;
+}
+
+
+div:has( #console-out-box ){
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  text-align: right;
+  background-color: #ffffff;
+}
+
+#console-out-box{
+  width: 100%;
+  height: 0;
+  transform-origin: top left;
+  overflow: hidden;
+}
+#console-out-box p{
+  margin: 0 0 18px 0
+}
+#console-toggle:checked + #console-out-box{
+  height: 30vh;
+  border: 1px solid black;
+}
+#console-box{
+  width: 100%;
+  height: calc( 30vh - 42px );
+  text-align: left;
+  background-color: #ffffff;
+  overflow-y: auto;
+}
+#console-box p{
+  padding: 0 1rem;
+  box-sizing: border-box;
+  margin: 0;
+}
+#console-box p:nth-of-type( 2n ){
+  background-color: #f0f0f0;
+}
+#console-box code{
+  margin: 0;
+  padding:0;
+}
+#console-controler{
+  height: 42px;
+  border: none;
+}
+#console-clear-button{
+  margin: 9px;
+}
+
+div:has( .promise-b-checkboxes ){
+  margin-top: 24px;
+}
+.promise-b-checkboxes{
+  margin-right: 12px;
+}
