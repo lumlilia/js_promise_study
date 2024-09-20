@@ -138,7 +138,8 @@ promise1.then( result => {  // thenはresolveが返ってきた際に実行さ�
       <p>then()内でreturnされた値が次のthen()へ渡されます。</p>
 
       <h3>試してみよう</h3>
-      <p>トリ○ク2で出てきた必ず5になる計算。</p>
+      <p>トリ○ク2で出てきた必ず5になる計算。<br />
+         1回の計算ごとにreturnをし、次のthenへ渡しています。</p>
       <p>1~100の範囲を超えた数値を指定した場合、エラーとなります。</p>
       <input type="number" value="1" id="promise-c-number" />
       <button id="promise-c-button">promiseC</button>

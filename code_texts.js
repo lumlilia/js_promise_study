@@ -1,7 +1,7 @@
 export default [
 // PromiseA
-  `const promise_a_checkbox = document.getElementById( 'promise-a-checkbox' );
-const promise_a_buttons = document.getElementsByClassName( 'promise-a-buttons' );
+  `// チェックボックスを取得
+const promise_a_checkbox = document.getElementById( 'promise-a-checkbox' );
 
 
 // Promise
@@ -59,7 +59,8 @@ promise_a_buttons[1].addEventListener( 'click', async () => {
 
 
 // PromiseB
-  `const checkboxes = document.getElementsByClassName( 'promise-b-checkboxes' );
+  `// チェックボックスを取得
+const checkboxes = document.getElementsByClassName( 'promise-b-checkboxes' );
 
 // Promise
 const promiseB = ( count ) => {
@@ -160,7 +161,8 @@ const eventPromiseB = ( button_number ) => {
 
 
 // promiseC
-`const input_number = document.getElementById( 'promise-c-number' );
+`// 入力欄を取得
+const input_number = document.getElementById( 'promise-c-number' );
 
 // Promise
 const promiseC = ( value ) => {
