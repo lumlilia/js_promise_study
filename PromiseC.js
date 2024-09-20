@@ -15,31 +15,73 @@ const promiseC = ( value ) => {
 };
 
 
+// 計算用の関数
+const promiseCCalc = ( count, values ) => {
+  let before_number = values.result;
+  let resolve_text = '';
+
+  return new Promise( ( resolve, reject ) => {
+    setTimeout( () => {
+      switch( count ){
+        case 1:
+          values.result *= 2;
+          resolve_text = `then1: ${ before_number } * 2 == ${ values.result }`;
+          break;
+        case 2:
+          values.result += 10;
+          resolve_text = `then2: ${ before_number } + 10 == ${ values.result }`;
+          break;
+        case 3:
+          values.result /= 2;
+          resolve_text = `then3: ${ before_number } / 2 == ${ values.result }`;
+          break;
+        case 4:
+          values.result -= values.initial_value;
+          resolve_text = `then4: ${ before_number } - ${ values.initial_value } == ${ values.result }`;
+          break;
+      }
+
+      resolve( resolve_text );
+    }, 500 );
+  });
+}
+
+
+let is_running = false;
+
 // イベント用関数
 const eventPromiseC = () => {
-  CustomConsole.log( '========== promiseC (プロミスチェーン) ==========' );
-  const value = input_number.value;
+  if( is_running ){
+    return;
+  }
 
-  const promise = promiseC( value );
+  is_running = true;
+  CustomConsole.log( '========== promiseC (プロミスチェーン) ==========' );
+  const values = {
+    result: input_number.value,
+    initial_value: input_number.value
+  };
+
+  const promise = promiseC( values.result );
 
   promise.then( result => {
-    const num = result * 2;
-    CustomConsole.log( `then1: ${ result } * 2 == ${ num }`);
-    return num;
+    CustomConsole.log( `${ result } を 5 にするよ！` );
+    return promiseCCalc( 1, values );
   })
   .then( result => {
-    const num = result + 10;
-    CustomConsole.log( `then2: ${ result } + 10 == ${ num }`);
-    return num;
+    CustomConsole.log( result );
+    return promiseCCalc( 2, values );
   })
   .then( result => {
-    const num = result / 2;
-    CustomConsole.log( `then3: ${ result } / 2 == ${ num }`);
-    return num;
+    CustomConsole.log( result );
+    return promiseCCalc( 3, values );
   })
   .then( result => {
-    const num = result - value;
-    CustomConsole.log( `then4: ${ result } - ${ value } == ${ num }`);
+    CustomConsole.log( result );
+    return promiseCCalc( 4, values );
+  }).then( result => {
+    CustomConsole.log( result );
+    is_running = false;
   })
   .catch( error => {
     CustomConsole.error( error );
