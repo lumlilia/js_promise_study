@@ -242,10 +242,13 @@ const eventPromiseC = () => {
     return promiseCCalc( 4, values );
   }).then( result => {
     console.log( result );
+    console.log( '---------- プロミスチェーンおしまい ----------' );
     is_running = false;
   })
   .catch( error => {
     console.error( error );
   });
+
+  console.log( 'イベントおしまい。Promiseあとは頼んだぞ！' );
 };`
 ];

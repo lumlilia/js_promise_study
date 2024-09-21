@@ -81,11 +81,14 @@ const eventPromiseC = () => {
     return promiseCCalc( 4, values );
   }).then( result => {
     CustomConsole.log( result );
+    CustomConsole.log( '---------- プロミスチェーンおしまい ----------' );
     is_running = false;
   })
   .catch( error => {
     CustomConsole.error( error );
   });
+
+  CustomConsole.log( 'イベントおしまい。Promiseあとは頼んだぞ！' );
 };
 
 
