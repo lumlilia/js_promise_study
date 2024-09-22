@@ -19,7 +19,7 @@ const promiseA = () => {
     }
 
     console.log( 'promiseA が完了しました' );
-  });
+  } );
 }
 
 
@@ -30,14 +30,14 @@ promise_a_buttons[0].addEventListener( 'click', () => {
 
   promiseA().then( result => {
     console.log( result );
-  }) .catch( error => {
+  } ) .catch( error => {
     console.error( error );
-  }) .finally( () => {
+  } ) .finally( () => {
     console.log( 'finally!!' );
-  });
+  } );
 
   console.log( 'イベント終了' );
-});
+} );
 
 
 // clickイベント(awaitあり)
@@ -47,14 +47,14 @@ promise_a_buttons[1].addEventListener( 'click', async () => {
 
   await promiseA().then( result => {
     console.log( result );
-  }) .catch( error => {
+  } ) .catch( error => {
     console.error( error );
-  }) .finally( () => {
+  } ) .finally( () => {
     console.log( 'finally!!' );
-  });
+  } );
 
   console.log( 'イベント終了' );
-});`,
+} );`,
 
 
 
@@ -82,7 +82,7 @@ const promiseB = ( count ) => {
           reject( \`1(\${ count }) (reject)\` );
         }
       }, 2000 );
-    }), 
+    } ), 
 
     new Promise( ( resolve, reject ) => {
       console.log( \`promiseB-2(\${ count }) を開始します\` );
@@ -96,7 +96,7 @@ const promiseB = ( count ) => {
           reject( \`2(\${ count }) (reject)\` );
         }
       }, 1000 );
-    }),
+    } ),
 
     new Promise( ( resolve, reject ) => {
       console.log( \`promiseB-3(\${ count }) を開始します\` );
@@ -110,7 +110,7 @@ const promiseB = ( count ) => {
           reject( \`3(\${ count }) (reject)\` );
         }
       }, 3000 );
-    }),
+    } ),
   ];
 };
 
@@ -148,14 +148,14 @@ const eventPromiseB = ( button_number ) => {
     else{
       console.log( \`---------- result: \${ result } -----------\` );
     }
-  }) .catch( error => {
+  } ) .catch( error => {
     if( typeof result === 'object' ){
       console.error( \`---------- result: \${ JSON.stringify( error ) } ----------\` );
     }
     else{
       console.error( \`---------- result: \${ error } ----------\` );
     }
-  });
+  } );
 }`,
 
 
@@ -172,7 +172,7 @@ const promiseC = ( value ) => {
     else{
       resolve( value );
     }
-  });
+  } );
 };
 
 
@@ -204,7 +204,7 @@ const promiseCCalc = ( count, values ) => {
 
       resolve( resolve_text );
     }, 500 );
-  });
+  } );
 }
 
 
@@ -228,27 +228,82 @@ const eventPromiseC = () => {
   promise.then( result => {
     console.log( \`\${ result } を 5 にするよ！\` );
     return promiseCCalc( 1, values );
-  })
-  .then( result => {
-    console.log( result );
-    return promiseCCalc( 2, values );
-  })
-  .then( result => {
-    console.log( result );
-    return promiseCCalc( 3, values );
-  })
-  .then( result => {
-    console.log( result );
-    return promiseCCalc( 4, values );
-  }).then( result => {
-    console.log( result );
-    console.log( '---------- プロミスチェーンおしまい ----------' );
-    is_running = false;
-  })
-  .catch( error => {
-    console.error( error );
-  });
+  } )
+    .then( result => {
+      console.log( result );
+      return promiseCCalc( 2, values );
+    } )
+    .then( result => {
+      console.log( result );
+      return promiseCCalc( 3, values );
+    } )
+    .then( result => {
+      console.log( result );
+      return promiseCCalc( 4, values );
+    } )
+    .then( result => {
+      console.log( result );
+      console.log( '---------- プロミスチェーンおしまい ----------' );
+      is_running = false;
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
 
   console.log( 'イベントおしまい。Promiseあとは頼んだぞ！' );
+};`,
+
+
+// asyncA
+`// セレクトボックスを取得
+const select_box = document.getElementById( 'async-a-select' );
+
+// 選択肢のリスト
+const animals = [
+  'ねこ', 'いぬ', 'たぬき', 'きつね'
+];
+
+
+let is_running = false;
+
+// Promise
+const asyncA = async () => {
+  const select_value = select_box.value;
+
+  try{
+    for( const item of animals ){  // forを使ってPromiseを繰り返すことができます
+      const result = await new Promise( ( resolve, reject ) => {  // awaitを付けるのを忘れずに！
+        setTimeout( () => {
+          if( select_value == item ){
+            reject( \`君は\${ item }だ！！\` );  // エラーとしてcatchに飛ばされます
+          }
+          else{
+            resolve( \`君は\${ item }ではないね\` );  // そのまま次の処理に進みます
+          }
+        }, 500 );
+      } );
+
+      console.log( result );
+    };
+  }
+  catch( error ){
+    console.error( error );
+  }
+
+  console.log( '---------- asyncAおしまい ----------' );
+  is_running = false;
+};
+
+
+// イベント用関数
+const eventAsyncA = () => {
+  if( is_running ){
+    return;
+  }
+
+  is_running = true;
+  console.log( '========== asyncA ==========' );
+  const a = asyncA();
+  console.log( 'イベントおしまい。asyncくんファイトー！！' );
 };`
 ];

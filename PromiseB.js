@@ -22,7 +22,7 @@ const promiseB = ( count ) => {
           reject( `1(${ count }) (reject)` );
         }
       }, 2000 );
-    }), 
+    } ), 
 
     new Promise( ( resolve, reject ) => {
       CustomConsole.log( `promiseB-2(${ count }) を開始します` );
@@ -36,7 +36,7 @@ const promiseB = ( count ) => {
           reject( `2(${ count }) (reject)` );
         }
       }, 1000 );
-    }),
+    } ),
 
     new Promise( ( resolve, reject ) => {
       CustomConsole.log( `promiseB-3(${ count }) を開始します` );
@@ -50,7 +50,7 @@ const promiseB = ( count ) => {
           reject( `3(${ count }) (reject)` );
         }
       }, 3000 );
-    }),
+    } ),
   ];
 };
 
@@ -88,14 +88,14 @@ const eventPromiseB = ( button_number ) => {
     else{
       CustomConsole.log( `---------- result: ${ result } -----------` );
     }
-  }).catch( error => {
+  } ).catch( error => {
     if( typeof result === 'object' ){
       CustomConsole.error( `---------- result: ${ JSON.stringify( error ) } ----------` );
     }
     else{
       CustomConsole.error( `---------- result: ${ error } ----------` );
     }
-  });
+  } );
 }
 
 

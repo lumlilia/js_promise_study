@@ -11,7 +11,7 @@ const promiseC = ( value ) => {
     else{
       resolve( value );
     }
-  });
+  } );
 };
 
 
@@ -43,7 +43,7 @@ const promiseCCalc = ( count, values ) => {
 
       resolve( resolve_text );
     }, 500 );
-  });
+  } );
 }
 
 
@@ -67,26 +67,27 @@ const eventPromiseC = () => {
   promise.then( result => {
     CustomConsole.log( `${ result } を 5 にするよ！` );
     return promiseCCalc( 1, values );
-  })
-  .then( result => {
-    CustomConsole.log( result );
-    return promiseCCalc( 2, values );
-  })
-  .then( result => {
-    CustomConsole.log( result );
-    return promiseCCalc( 3, values );
-  })
-  .then( result => {
-    CustomConsole.log( result );
-    return promiseCCalc( 4, values );
-  }).then( result => {
-    CustomConsole.log( result );
-    CustomConsole.log( '---------- プロミスチェーンおしまい ----------' );
-    is_running = false;
-  })
-  .catch( error => {
-    CustomConsole.error( error );
-  });
+  } )
+    .then( result => {
+      CustomConsole.log( result );
+      return promiseCCalc( 2, values );
+    } )
+    .then( result => {
+      CustomConsole.log( result );
+      return promiseCCalc( 3, values );
+    } )
+    .then( result => {
+      CustomConsole.log( result );
+      return promiseCCalc( 4, values );
+    } )
+    .then( result => {
+      CustomConsole.log( result );
+      CustomConsole.log( '---------- プロミスチェーンおしまい ----------' );
+      is_running = false;
+    } )
+    .catch( error => {
+      CustomConsole.error( error );
+    } );
 
   CustomConsole.log( 'イベントおしまい。Promiseあとは頼んだぞ！' );
 };

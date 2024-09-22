@@ -4,14 +4,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title></title>
+  <title>JavaScript非同期処理さんぷる</title>
   <link rel="stylesheet" href="main.css" />
 </head>
 
 
 <body>
   <main>
-    <h1>JavaScript非同期処理おぼえがき</h1>
+    <h1>JavaScript非同期処理さんぷる</h1>
+    <p>という名のおぼえがき</p>
+    <p>間違えているかもしれない</p>
+
+    <hr />
+
     <div>
       <h2>Promiseとawait</h2>
       <h3>説明</h3>
@@ -137,6 +142,21 @@ promise1.then( result => {  // thenはresolveが返ってきた際に実行さ�
       <p>Promiseの結果を受け取るthenメソッドは繋げていくことも可能です。</p>
       <p>then()内でreturnされた値が次のthen()へ渡されます。</p>
       <p>複数の非同期処理を順番に実行していきたい時に役に立ちますが、繋げすぎると可読性やパフォーマンスが低下するので、複雑な処理をしたい場合はasyncを使った方がいいかも。</p>
+      <details>
+        <summary>thenが繋がるようす</summary>
+        <pre><code>new Promise( resolve => {
+  resolve( 'ほげほげ' );
+} )
+  .then( result => {
+    return `${ result }ふがふが`;  // returnされた値が次のthenへ
+  } )
+  .then( result => {  // result == 'ほげほげふがふが'
+    return `${ result }ぴよぴよ`;
+  } )
+  .then( result => {  // result == 'ほげほげふがふがぴよぴよ'
+    console.log( `${ result }おあー` );  // >ほげほげふがふがぴよぴよおあー
+  } );</code></pre>
+      </details>
 
       <h3>試してみよう</h3>
       <p>トリ○ク2で出てきた必ず5になる計算。<br />
@@ -154,8 +174,54 @@ promise1.then( result => {  // thenはresolveが返ってきた際に実行さ�
 
     <hr />
 
-    <h2>async</h2>
-    <p>書く予定だよ！！</p>
+    <div>
+      <h2>async</h2>
+      <h3>説明</h3>
+      <p>awaitの件で出てきたasyncくんです。</p>
+      <p>asyncはpromiseの糖衣構文で、awaitやtryを用いることで
+      <ul>
+        <li>thenによる受け渡しをする必要がなくなり、普通の処理のように書ける</li>
+        <li>連鎖するPromiseをforなどでまとめて書くことができる</li>
+      </ul>
+      といったことが可能になります。</p>
+
+      <details>
+        <summary>基本的な流れ</summary>
+        <pre><code>const async_kihon = async () => {
+  try{
+    new Promise( ( resolve, reject ) => {
+      reject( 'awaitを付けないとcatchされないので気をつけて' );
+    } );
+
+    for( let i = 0; i < 2; i++ ){
+      const result = await new Promise( ( resolve, reject ) => {
+        if( !i ){  // 1回目
+          resolve( 'resolveの場合、このまま先に進みます' );
+        }
+        else{  // 2回目
+          reject( 'rejectの場合、catchに飛びます' );
+        }
+      } );
+
+      console.log( result );  // この例では、2回目はrejectされているので実行されません
+    }
+  } catch( error ){
+    console.error( error );
+  };
+}</code></pre>
+      </details>
+
+      <h3>試してみよう</h3>
+      <p>配列の値を一つ一つ回し、セレクトボックスの値と比較します。</p>
+      <p>双方の値が合致したときにrejectします。</p>
+      <select id="async-a-select"></select>
+      <button id="async-a-button">asyncA</button>
+
+      <details>
+        <summary>コード</summary>
+        <pre class="sample-pres"></pre>
+      </details>
+    </div>
 
     <hr />
 

@@ -17,7 +17,7 @@ const promiseA = () => {
     }
 
     CustomConsole.log( 'promiseA が完了しました' );
-  });
+  } );
 }
 
 
@@ -27,11 +27,11 @@ const eventPromiseA = () => {
   CustomConsole.log( 'イベント開始' );
   promiseA().then( result => {
     CustomConsole.log( result );
-  }) .catch( error => {
+  } ) .catch( error => {
     CustomConsole.error( error );
-  }) .finally( () => {
+  } ) .finally( () => {
     CustomConsole.log( 'finally!!' );
-  });
+  } );
   CustomConsole.log( 'イベント終了' );
 }
 
@@ -42,11 +42,11 @@ const eventPromiseAUseAwait = async () => {
   CustomConsole.log( 'イベント開始' );
   await promiseA().then( result => {
     CustomConsole.log( result );
-  }) .catch( error => {
+  } ) .catch( error => {
     CustomConsole.error( error );
-  }) .finally( () => {
+  } ) .finally( () => {
     CustomConsole.log( 'finally!!' );
-  });
+  } );
   CustomConsole.log( 'イベント終了' );
 }
 

@@ -7,7 +7,7 @@ const hilight_list = {
     argc: 1,
   },
   string: {
-    reg: new RegExp( '((\'|`)[^\n]*?(\'|`))', 'g' ),
+    reg: new RegExp( '(?<!^.*\/\/.*)((\'|`)[^\n]*?(\'|`))', 'gm' ),
     color: '#008000',
     argc: 1,
   },
@@ -17,7 +17,7 @@ const hilight_list = {
     argc: 1,
   },
   func: {
-    reg: new RegExp( '(?<=^| )((if|else|for|while|switch)( |\()))', 'gm' ),
+    reg: new RegExp( '(?<=^| )(if|else|for|while|switch|try|catch|finally)(?=( |\\\()|\\\{)', 'gm' ),
     color: '#0050dd',
     argc: 1,
   },
